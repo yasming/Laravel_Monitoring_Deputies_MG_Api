@@ -15,11 +15,11 @@ class FundsController extends Controller
 
         $id_deputies = $this->getDeputiesIdFromDb();
 
-        $result = array_map(array($this, 'getAllExpenses'), $id_deputies);
+        array_map(array($this, 'getAllExpensesPerMonth'), $id_deputies);
 
-        $answer = "All expenses  were send to database";
+        $result = "All expenses were send to database";
 
-        return $this->apiResult($answer);
+        return $this->apiResult($result);
 
     }
 
@@ -31,13 +31,13 @@ class FundsController extends Controller
 
     }
 
-    public function getAllExpenses($id_deputies){
+    public function getAllExpensesPerMonth($id_deputy){
 
         for($month = 1; 12 >= $month ; $month++){
 
             $url = env('API_FUNDS');
             $curl = curl_init();
-            curl_setopt($curl, CURLOPT_URL, $url. $id_deputies. "/2017/". $month);
+            curl_setopt($curl, CURLOPT_URL, $url. $id_deputy. "/".env("YEAR")."/". $month);
             curl_setopt($curl, CURLOPT_FAILONERROR,1);
             curl_setopt($curl, CURLOPT_FOLLOWLOCATION,1);
             curl_setopt($curl, CURLOPT_RETURNTRANSFER,1);
@@ -56,7 +56,8 @@ class FundsController extends Controller
 
         }
 
-        $result = "Expenses added";
+        $result = "All expenses  were send to database";
+
         return $this->apiResult($result);
 
     }
@@ -65,19 +66,19 @@ class FundsController extends Controller
 
         $id_deputy = $expensesResultJson["resumoVerba"][0]["idDeputado"];
 
-        $totalValue = 0;
+        $totalValueOfExpenses = 0;
 
-        for($despesa = 0;  $despesa < sizeof($expensesResultJson["resumoVerba"]); $despesa++){
+        for($expensive = 0;  $expensive < sizeof($expensesResultJson["resumoVerba"]); $expensive++){
 
-            $value = $expensesResultJson["resumoVerba"][$despesa]["valor"];
+            $value = $expensesResultJson["resumoVerba"][$expensive]["valor"];
             (double)$valueWithDot = str_replace(",", "." , $value);
-            $totalValue = $totalValue + $valueWithDot;
+            $totalValueOfExpenses = $totalValueOfExpenses + $valueWithDot;
         }
 
         $datas = [
             'id_deputy' => $id_deputy,
-            'month' => $mes,
-            'expenses' => $totalValue
+            'month' => $month,
+            'expenses' => $totalValueOfExpenses
         ];
 
         DB::table('funds')->insert($datas);

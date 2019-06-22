@@ -17,7 +17,20 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/deputies', 'Deputies\DeputiesController@getDeputies');
-Route::get('/deputies/refund', 'Deputies\DeputiesController@getThe5MoreReimbursementDeputiesPerMonth');
+Route::group(['prefix' => 'deputies'], function () {
 
-Route::get('/funds', 'Funds\FundsController@getDeputiesExpenses');
+    Route::get('/', 'Deputies\DeputiesController@getDeputies');
+    Route::get('/expenses', 'Funds\FundsController@getDeputiesExpenses');
+    Route::get('/socialMedia', 'SocialMedias\SocialMediasController@getSocialMedias');
+
+    Route::get('/socialMedia/ranking', 'Deputies\DeputiesController@getRankingOfSocialMedia');
+    Route::get('/refunds', 'Deputies\DeputiesController@getTheFiveMoreReimbursementDeputiesPerMonth');
+
+
+
+
+});
+
+
+
+

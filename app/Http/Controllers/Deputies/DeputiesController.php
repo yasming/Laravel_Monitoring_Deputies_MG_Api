@@ -12,37 +12,27 @@ class DeputiesController extends Controller
 {
     public function getDeputies(){
 
-        // $url = env('API_DEPUTIES');
-        // $curl = curl_init($url);
-        // curl_setopt($curl, CURLOPT_HTTPHEADER, array('Accept: application/json'));
-        // curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-        // $response = curl_exec($curl);
-        // $responseJson = json_decode($response, true);
-
-        // $deputiesJson = $responseJson["list"];
-
-        // $deputiesInserted = array_map(array($this, 'sendDeputiesToDb'), $deputiesJson);
-
-        // $answer = "All deputies were send to database";
-
-        // return $this->apiResult($answer);
-        $client = new Client();
-
         $url = env('API_DEPUTIES');
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, "http://dadosabertos.almg.gov.br/ws/deputados/em_exercicio");
+        curl_setopt($curl, CURLOPT_FAILONERROR,1);
+        curl_setopt($curl, CURLOPT_FOLLOWLOCATION,1);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER,1);
+        curl_setopt($curl, CURLOPT_TIMEOUT, 15);
+        $resultXml = curl_exec($curl);
+        curl_close($curl);
 
-        $response = $client->request('GET', $url);
+        //convert xml to json
+        $xmlLoaded = simplexml_load_string($resultXml, "SimpleXMLElement", LIBXML_NOCDATA);
+        $resultJson = json_encode($xmlLoaded);
+        $deputiesResultJson = json_decode($resultJson,TRUE);
+        $deputiesJson = $deputiesResultJson["deputado"];
 
-        $responseJson = json_decode($response->getBody() , true);
+        array_map(array($this, 'sendDeputiesToDb'), $deputiesJson);
 
-        $deputiesJson = $responseJson["list"];
+        $result = "All deputies were send to database";
 
-        $deputiesInserted = array_map(array($this, 'sendDeputiesToDb'), $deputiesJson);
-
-        $answer = "All deputies were send to database";
-
-        return $this->apiResult($answer);
-
-
+        return $this->apiResult($result);
 
     }
 
@@ -59,7 +49,7 @@ class DeputiesController extends Controller
         return $result;
     }
 
-    public function getThe5MoreReimbursementDeputiesPerMonth(){
+    public function getTheFiveMoreReimbursementDeputiesPerMonth(){
 
         $fiveMoreExpensiveDeputiesPerMonth = [];
 
@@ -78,6 +68,18 @@ class DeputiesController extends Controller
         }
         return $this->ApiResult($fiveMoreExpensiveDeputiesPerMonth);
 
+
+    }
+
+    public function getRankingOfSocialMedia(){
+
+        $rankingOfSocialMidias = DB::table('social_media')->selectRaw('name as nome, sum(quantity) as quantidade')
+                                                          ->groupBy('name')
+                                                          ->orderBy('quantidade' , 'desc')
+                                                          ->get()
+                                                          ->toArray();
+
+        return $this->ApiResult($rankingOfSocialMidias);
 
     }
 
