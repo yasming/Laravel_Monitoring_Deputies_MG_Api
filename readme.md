@@ -34,8 +34,8 @@ GET
 http://localhost:8000/api/deputies
 ```
 ```
-This endpoint will get all deputies from api: http://dadosabertos.almg.gov.br/ws/deputados/em_exercicio , and send the
-the deputies datas to database, when it is done it will show the follow message:
+This endpoint will get all deputies from api: http://dadosabertos.almg.gov.br/ws/deputados/em_exercicio ,
+and send the the deputies datas to database, when it is done it will show the follow message:
 {
     "result": "All deputies were send to database"
 }
