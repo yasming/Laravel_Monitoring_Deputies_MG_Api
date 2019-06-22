@@ -64,7 +64,7 @@ class SocialMediasController extends Controller
 
     public function sendSocialMediasToDb($deputiesSocialMediasJson){
 
-        // php isnt recognizing the array, it says deputiesSocialMediasJson isnt an array
+        // php is not recognizing the array, it says deputiesSocialMediasJson is not an array
         $lengthOfArray = sizeof((array)$deputiesSocialMediasJson);
 
         if($lengthOfArray == 2){
@@ -82,8 +82,8 @@ class SocialMediasController extends Controller
             return $this->apiResult($result);
 
         }else if ($lengthOfArray ==3){
-            // php isnt recognizing the array, it says deputiesSocialMediasJson isnt an array
-            // so i needed to do some changes to manipuling it
+            // php is not recognizing the array, it says deputiesSocialMediasJson is not an array
+            // so i needed to do some changes to manipulate it
             $deputiesSocialMediasJsonToArray = (array)$deputiesSocialMediasJson;
             $nameOfSocialMedia = array_splice($deputiesSocialMediasJsonToArray,1,1);
 
