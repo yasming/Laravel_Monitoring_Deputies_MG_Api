@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Deputies;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use GuzzleHttp\Client;
 use DB;
 use App\Deputy;
 

@@ -26,9 +26,6 @@ Route::group(['prefix' => 'deputies'], function () {
     Route::get('/socialMedia/ranking', 'Deputies\DeputiesController@getRankingOfSocialMedia');
     Route::get('/refunds', 'Deputies\DeputiesController@getTheFiveMoreReimbursementDeputiesPerMonth');
 
-
-
-
 });
 
 

@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use DB;
 use App\Deputy;
-use Vyuldashev\XmlToArray\XmlToArray;
 
 class FundsController extends Controller
 {
