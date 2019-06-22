@@ -72,7 +72,6 @@ class SocialMediasController extends Controller
 
             $datas = [
                 "name" => $nameOfSocialMedia,
-                "quantity" => 1,
             ];
 
             SocialMedia::create($datas);
@@ -88,7 +87,6 @@ class SocialMediasController extends Controller
             $nameOfSocialMedia = array_splice($deputiesSocialMediasJsonToArray,1,1);
 
             $nameOfSocialMediaWithRightKey = $this->replace_key_function($nameOfSocialMedia, 'nome', 'name');
-            $nameOfSocialMediaWithRightKey["quantity"] = 1;
 
             SocialMedia::create($nameOfSocialMediaWithRightKey);
 

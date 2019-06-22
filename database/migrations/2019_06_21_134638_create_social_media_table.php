@@ -16,7 +16,6 @@ class CreateSocialMediaTable extends Migration
         Schema::create('social_media', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->nullable();
-            $table->integer('quantity')->nullable();
             $table->timestamps();
         });
     }

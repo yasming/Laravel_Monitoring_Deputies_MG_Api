@@ -72,7 +72,7 @@ class DeputiesController extends Controller
 
     public function getRankingOfSocialMedia(){
 
-        $rankingOfSocialMidias = DB::table('social_media')->selectRaw('name as nome, sum(quantity) as quantidade')
+        $rankingOfSocialMidias = DB::table('social_media')->selectRaw('name as nome, count(name) as quantidade')
                                                           ->groupBy('name')
                                                           ->orderBy('quantidade' , 'desc')
                                                           ->get()
