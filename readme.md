@@ -49,9 +49,9 @@ GET
 http://localhost:8000/api/deputies/expenses
 ```
 ```
-This endpoint will get all deputies's expenses from api: http://dadosabertos.almg.gov.br/ws/prestacao_contas/verbas_indenizatorias/
-deputados/{id}/{year}/{month}, and send the deputies's expenses datas to database,
-when it is done it will show the follow message:
+This endpoint will get all deputies's expenses from api: http://dadosabertos.almg.gov.br/ws/
+prestacao_contas/verbas_indenizatorias/deputados/{id}/{year}/{month}, and send the deputies's
+expenses datas to database, when it is done it will show the follow message:
 {
     "result": "All expenses were send to database"
 }
