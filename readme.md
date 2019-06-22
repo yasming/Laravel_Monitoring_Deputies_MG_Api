@@ -25,6 +25,31 @@ Composer
 
 ### Getting Started
 
+- First command when you get the project: 
+```
+composer update
+```
+- Start server:
+```
+php artisan serve
+```
+- Put your databases informations in .env:
+
+```
+DB_CONNECTION=pgsql
+DB_HOST=127.0.0.1
+DB_PORT=5432
+DB_DATABASE=
+DB_USERNAME=
+DB_PASSWORD=
+```
+
+- Run migrations:
+
+```
+php artisan migrate
+```
+
 - How to consume the project routes: 
 
 ```
