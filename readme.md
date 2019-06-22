@@ -50,7 +50,7 @@ php artisan serve
 php artisan migrate
 ```
 
-- How to consume the project routes: 
+- How to consume the project routes in order: 
 
 ```
 GET
