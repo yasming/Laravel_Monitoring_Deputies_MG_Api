@@ -25,7 +25,7 @@ Composer
 
 ### Getting Started
 
-- First command when you get the project: 
+- First command when you clone the project: 
 ```
 composer update
 ```
