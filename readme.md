@@ -7,7 +7,7 @@ Public api of Minas Gerais: http://dadosabertos.almg.gov.br/ws/ajuda/sobre .
 ## Prerequisites
 
 ```
-PHP >= 7.1
+PHP >= 7.2.3
 ```
 
 ```
