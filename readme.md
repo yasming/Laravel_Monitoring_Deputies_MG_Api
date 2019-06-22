@@ -29,10 +29,6 @@ Composer
 ```
 composer update
 ```
-- Start server:
-```
-php artisan serve
-```
 - Put your databases informations in .env:
 
 ```
@@ -42,6 +38,10 @@ DB_PORT=5432
 DB_DATABASE=
 DB_USERNAME=
 DB_PASSWORD=
+```
+- Start server:
+```
+php artisan serve
 ```
 
 - Run migrations:
