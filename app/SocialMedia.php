@@ -14,4 +14,14 @@ class SocialMedia extends Model
     protected $fillable = [
         'name', 'quantity',
     ];
+
+    public function getSocialMediaRankingFromDb(){
+
+        return $this->selectRaw('name as nome, count(name) as quantidade')
+                    ->groupBy('name')
+                    ->orderBy('quantidade' , 'desc')
+                    ->get()
+                    ->toArray();
+
+    }
 }

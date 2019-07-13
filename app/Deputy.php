@@ -3,15 +3,18 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use DB;
 
 class Deputy extends Model
 {
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
+
     protected $fillable = [
         'name', 'id_deputy',
     ];
+
+    public function getDeputiesId(){
+
+        return $this->all()->pluck('id_deputy')->ToArray();
+
+    }
 }

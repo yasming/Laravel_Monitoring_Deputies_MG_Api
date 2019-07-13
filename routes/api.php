@@ -19,10 +19,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::group(['prefix' => 'deputies'], function () {
 
-    Route::get('/', 'Deputies\DeputiesController@getDeputies');
-    Route::get('/expenses', 'Funds\FundsController@getDeputiesExpenses');
-    Route::get('/socialMedia', 'SocialMedias\SocialMediasController@getSocialMedias');
-
     Route::get('/socialMedia/ranking', 'Deputies\DeputiesController@getRankingOfSocialMedia');
     Route::get('/refunds', 'Deputies\DeputiesController@getTheFiveMoreReimbursementDeputiesPerMonth');
 

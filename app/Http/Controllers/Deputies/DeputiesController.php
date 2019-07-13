@@ -3,68 +3,25 @@
 namespace App\Http\Controllers\Deputies;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use DB;
-use App\Deputy;
+use App\Fund;
+use App\SocialMedia;
 
 class DeputiesController extends Controller
 {
-    public function getDeputies(){
-
-        $url = env('API_DEPUTIES');
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, "http://dadosabertos.almg.gov.br/ws/deputados/em_exercicio");
-        curl_setopt($curl, CURLOPT_FAILONERROR,1);
-        curl_setopt($curl, CURLOPT_FOLLOWLOCATION,1);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER,1);
-        curl_setopt($curl, CURLOPT_TIMEOUT, 15);
-        $resultXml = curl_exec($curl);
-        curl_close($curl);
-
-        //convert xml to json
-        $xmlLoaded = simplexml_load_string($resultXml, "SimpleXMLElement", LIBXML_NOCDATA);
-        $resultJson = json_encode($xmlLoaded);
-        $deputiesResultJson = json_decode($resultJson,TRUE);
-        $deputiesJson = $deputiesResultJson["deputado"];
-
-        array_map(array($this, 'sendDeputiesToDb'), $deputiesJson);
-
-        $result = "All deputies were send to database";
-
-        return $this->apiResult($result);
-
-    }
-
-    public function sendDeputiesToDb($deputy){
-
-        $data = [
-            "id_deputy" => $deputy['id'],
-            "name" => $deputy['nome']
-        ];
-
-        Deputy::create($data);
-        $result = "Deputy inserted";
-
-        return $result;
-    }
-
     public function getTheFiveMoreReimbursementDeputiesPerMonth(){
+
+        $funds = new Fund;
 
         $fiveMoreExpensiveDeputiesPerMonth = [];
 
         for($month = 1;  12 >= $month; $month++){
 
-            $ExpensivesPerMonthAndNameOfDeputies = DB::table('funds')->leftjoin('deputies' , 'deputies.id_deputy','funds.id_deputy')
-                                                                     ->select('funds.expenses as despesas', 'deputies.name as nome', 'funds.month as mês')
-                                                                     ->where('month',$month)
-                                                                     ->orderBy('funds.expenses', 'desc')
-                                                                     ->get()
-                                                                     ->toArray();
+            $expensivesPerMonthAndNameOfDeputies = $funds->getFiveMoreExpensiveDeputiesPerMonth($month);
 
-            $fiveMoreExpensiveDeputies = array_slice($ExpensivesPerMonthAndNameOfDeputies,0,5);
-            array_push($fiveMoreExpensiveDeputiesPerMonth,$fiveMoreExpensiveDeputies);
+            array_push($fiveMoreExpensiveDeputiesPerMonth,$expensivesPerMonthAndNameOfDeputies);
 
         }
+
         return $this->ApiResult($fiveMoreExpensiveDeputiesPerMonth);
 
 
@@ -72,11 +29,9 @@ class DeputiesController extends Controller
 
     public function getRankingOfSocialMedia(){
 
-        $rankingOfSocialMidias = DB::table('social_media')->selectRaw('name as nome, count(name) as quantidade')
-                                                          ->groupBy('name')
-                                                          ->orderBy('quantidade' , 'desc')
-                                                          ->get()
-                                                          ->toArray();
+        $socialMedia = new SocialMedia;
+
+        $rankingOfSocialMidias = $socialMedia->getSocialMediaRankingFromDb();
 
         return $this->ApiResult($rankingOfSocialMidias);
 

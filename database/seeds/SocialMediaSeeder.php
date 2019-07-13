@@ -1,34 +1,23 @@
 <?php
 
-namespace App\Http\Controllers\SocialMedias;
-
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use GuzzleHttp\Client;
-use DB;
+use Illuminate\Database\Seeder;
 use App\Deputy;
 use App\SocialMedia;
 
-class SocialMediasController extends Controller
+class SocialMediaSeeder extends Seeder
 {
-    public function getSocialMedias(){
+    /**
+     * Seed the application's database.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        $deputy = new Deputy;
 
-        $id_deputies = $this->getDeputiesIdFromDb();
+        $id_deputies = $deputy->getDeputiesId();
 
-        $result = array_map(array($this, 'getArrayOfSocialMediasFromEachDeputy'), $id_deputies);
-
-        $result = "Social medias inserted to database with success";
-        // $result = $this->getArrayOfSocialMediasFromEachDeputy(18852);
-        return $this->apiResult($result);
-
-
-    }
-
-    public function getDeputiesIdFromDb(){
-
-        $id_deputies = DB::table('deputies')->select('id_deputy')->get()->pluck('id_deputy')->ToArray();
-
-        return $id_deputies;
+        array_map(array($this, 'getArrayOfSocialMediasFromEachDeputy'), $id_deputies);
 
     }
 
@@ -53,13 +42,13 @@ class SocialMediasController extends Controller
         // the datas from endpoint aren't the same for every deputy
         if($deputiesSocialMediasJson["redesSociais"] != [] ){
 
-            $return = array_map(array($this, 'sendSocialMediasToDb'), $deputiesSocialMediasJson["redesSociais"]["redeSocialDeputado"]);
+            array_map(array($this, 'sendSocialMediasToDb'), $deputiesSocialMediasJson["redesSociais"]["redeSocialDeputado"]);
 
         }
 
         $result = "Social medias inserted to database with success";
 
-        return $this->apiResult($result);
+        return $result;
     }
 
     public function sendSocialMediasToDb($deputiesSocialMediasJson){
@@ -78,7 +67,7 @@ class SocialMediasController extends Controller
 
             $result = "Social medias inserted to database with success";
 
-            return $this->apiResult($result);
+            return $result;
 
         }else if ($lengthOfArray ==3){
             // php is not recognizing the array, it says deputiesSocialMediasJson is not an array
@@ -92,7 +81,7 @@ class SocialMediasController extends Controller
 
             $result = "Social medias inserted to database with success";
 
-            return $this->apiResult($result);
+            return $result;
         }
 
 

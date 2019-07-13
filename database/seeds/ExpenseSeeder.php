@@ -1,32 +1,23 @@
 <?php
 
-namespace App\Http\Controllers\Funds;
-
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use GuzzleHttp\Client;
-use DB;
+use Illuminate\Database\Seeder;
 use App\Deputy;
+use App\Fund;
 
-class FundsController extends Controller
+class ExpenseSeeder extends Seeder
 {
-    public function getDeputiesExpenses(){
+    /**
+     * Seed the application's database.
+     *
+     * @return void
+     */
+    public function run()
+    {
+        $deputy = new Deputy;
 
-        $id_deputies = $this->getDeputiesIdFromDb();
+        $id_deputies = $deputy->getDeputiesId();
 
         array_map(array($this, 'getAllExpensesPerMonth'), $id_deputies);
-
-        $result = "All expenses were send to database";
-
-        return $this->apiResult($result);
-
-    }
-
-    public function getDeputiesIdFromDb(){
-
-        $id_deputies = DB::table('deputies')->select('id_deputy')->get()->pluck('id_deputy')->ToArray();
-
-        return $id_deputies;
 
     }
 
@@ -57,7 +48,7 @@ class FundsController extends Controller
 
         $result = "All expenses  were send to database";
 
-        return $this->apiResult($result);
+        return $result;
 
     }
 
@@ -80,11 +71,14 @@ class FundsController extends Controller
             'expenses' => $totalValueOfExpenses
         ];
 
-        DB::table('funds')->insert($datas);
+        Fund::create($datas);
 
         $result = "Expenses added";
-        return $this->apiResult($result);
+
+        return $result;
 
     }
 
 }
+
+
