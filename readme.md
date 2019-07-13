@@ -50,37 +50,15 @@ php artisan serve
 php artisan migrate
 ```
 
-- How to consume the project routes in order: 
+- How to seed database:
 
 ```
-GET
-```
-```
-http://localhost:8000/api/deputies
-```
-```
-This endpoint will get all deputies from api: http://dadosabertos.almg.gov.br/ws/deputados/
-em_exercicio , and send the deputies datas to database, when it is done it will show the
-follow message:
-{
-    "result": "All deputies were send to database"
-}
+First run the follow command: php artisan db:seed --class=DeputySeeder . 
+It will seed deputies table, getting the datas from this public api 
+http://dadosabertos.almg.gov.br/ws/deputados/em_exercicio .
 ```
 
-```
-GET
-```
-```
-http://localhost:8000/api/deputies/expenses
-```
-```
-This endpoint will get all deputies's expenses from api: http://dadosabertos.almg.gov.br/ws/
-prestacao_contas/verbas_indenizatorias/deputados/{id}/{year}/{month}, and send the deputies's
-expenses datas to database, when it is done it will show the follow message:
-{
-    "result": "All expenses were send to database"
-}
-```
+- How to consume the project routes: 
 
 ```
 GET
@@ -91,23 +69,6 @@ http://localhost:8000/api/deputies/refunds
 ```
 This endpoint will show the five more refunded deputies per month in 2017
 ```
-
-```
-GET
-```
-```
-http://localhost:8000/api/deputies/socialMedia
-```
-```
-This endpoint will get deputie's social medias from api: http://dadosabertos.almg.gov.br/
-ws/deputados/{id}, and send it to database,  when it is done it will show the follow
-message:
-
-{
-    "result": "Social medias inserted to database with success"
-}
-```
-
 
 ```
 GET
