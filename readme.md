@@ -7,7 +7,7 @@ Public api of Minas Gerais: http://dadosabertos.almg.gov.br/ws/ajuda/sobre .
 ## Prerequisites
 
 ```
-PHP >= 7.2.3
+PHP >= 7.3.3
 ```
 
 ```
@@ -83,7 +83,7 @@ To finish database seed run the follow command:
 php artisan db:seed --class=SocialMediaSeeder
 ```
 ```
-It will seed funds table, getting the datas from this public api 
+It will seed social_media table, getting the datas from this public api 
 http://dadosabertos.almg.gov.br/ws/deputados/{id}
 ```
 
