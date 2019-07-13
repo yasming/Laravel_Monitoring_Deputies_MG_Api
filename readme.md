@@ -56,11 +56,35 @@ php artisan migrate
 First run the follow command: 
 ```
 ```
-php artisan db:seed --class=DeputySeeder . 
+php artisan db:seed --class=DeputySeeder
 ```
 ```
 It will seed deputies table, getting the datas from this public api 
-http://dadosabertos.almg.gov.br/ws/deputados/em_exercicio .
+http://dadosabertos.almg.gov.br/ws/deputados/em_exercicio 
+```
+
+
+```
+After this run the follow command: 
+```
+```
+php artisan db:seed --class=ExpenseSeeder
+```
+```
+It will seed funds table, getting the datas from this public api 
+http://dadosabertos.almg.gov.br/ws/prestacao_contas/verbas_indenizatorias/deputados/
+{id}/{year}/{month} 
+```
+
+```
+To finish database seed run the follow command: 
+```
+```
+php artisan db:seed --class=SocialMediaSeeder
+```
+```
+It will seed funds table, getting the datas from this public api 
+http://dadosabertos.almg.gov.br/ws/deputados/{id}
 ```
 
 - How to consume the project routes: 
