@@ -53,7 +53,12 @@ php artisan migrate
 - How to seed database:
 
 ```
-First run the follow command: php artisan db:seed --class=DeputySeeder . 
+First run the follow command: 
+```
+```
+php artisan db:seed --class=DeputySeeder . 
+```
+```
 It will seed deputies table, getting the datas from this public api 
 http://dadosabertos.almg.gov.br/ws/deputados/em_exercicio .
 ```
